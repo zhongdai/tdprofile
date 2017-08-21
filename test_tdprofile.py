@@ -5,7 +5,7 @@
 import os
 import unittest
 
-from tdprofile import tdprofile
+from tdprofile import tdprofile as tdp
 
 
 class TDPROFILETestCase(unittest.TestCase):
@@ -16,6 +16,9 @@ class TDPROFILETestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_invalid_username(self):
+        with self.assertRaises(TypeError):
+                p = tdp.Profile(1,'a','a')
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TDPROFILETestCase)
