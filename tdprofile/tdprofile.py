@@ -8,6 +8,27 @@ import base64
 import os
 import sys
 
+def ask_user(question_text, tip_text, default_text=None):
+    """Give the standard output a question and return the answer
+    """
+    print('**{}**'.format(tip_text))
+    if default_text is None:
+        question = '{q} :'.format(q=question_text)
+    else:
+        question = '{q} [default: {d}]:'.format(q=question_text,
+                                                d=default_text)
+    sys.stdout.write(question)
+    while True:
+        answer_text = input()
+        if answer_text == '' and default_text is not None:
+            return default_text
+        elif answer_text != '':
+            return answer_text.strip()
+        else:
+            sys.stdout.write(question)
+
+
+
 class ProfileCollection(object):
     """Represent all profiles as a collection
 
@@ -31,7 +52,7 @@ class ProfileCollection(object):
         if not isinstance(value, Profile):
             raise TypeError('The value must be a `Profile` type')
         self._profile[key] = value
-        
+
     def _save_profile(self):
         pass
 
@@ -88,6 +109,13 @@ class Profile(object):
     def password(self):
         return base64.b64decode(self._password).decode('utf-8')
 
+
+def command_line_add_profile():
+    sys_username = os.environ.get('USERNAME')
+    profile_name = ask_user('Please give the profile name','Short name for your profile, like TDP1',None)
+    user_name = ask_user('Please give the profile logon user','Your Salary ID',sys_username)
+    user_pass = ask_user('Please give the logon password','The password',None)
+    print('{} / {} / {}'.format(profile_name, user_name, user_pass))
 
 
 def command_line_runner():

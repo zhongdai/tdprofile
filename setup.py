@@ -53,7 +53,8 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'tdprofile = tdprofile.tdprofile:command_line_runner'
+            'tdprofile = tdprofile.tdprofile:command_line_runner',
+            'addtdprofile = tdprofile.tdprofile:command_line_add_profile'
         ]
     },
     install_requires=[
