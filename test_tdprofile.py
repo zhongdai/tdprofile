@@ -52,12 +52,31 @@ class TDPROFILETestCase(unittest.TestCase):
         n = Month(2018,2)
 
         self.assertEqual(n, m + 1)
+
+    def test_sub_same_year(self):
+        m = Month(2018,1)
+        n = Month(2018,2)
+        result = n - 1
+
+        self.assertEqual(m, result)
         
     def test_add_next_year(self):
         m = Month(2018,10)
         n = Month(2019,1)
 
         self.assertEqual(n, m + 3)
+
+    def test_sub_last_year(self):
+        m = Month(2018,10)
+        n = Month(2019,1)
+
+        self.assertEqual(m, n - 3)
+
+    def test_sub_zero_month(self):
+        m = Month(2017,12)
+        n = Month(2018,7)
+
+        self.assertEqual(m, n - 7)
 
     def test_from_month_key(self):
         m = Month(2018, 10)

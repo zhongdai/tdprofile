@@ -61,6 +61,29 @@ class Month(object):
         else:
             return False
         
+    def __sub__(self, n):
+        """Assume n > 0"""
+        if not isinstance(n, int) or n <= 0:
+            raise ValueError("Please give a int and greater than 0")
+        if n >= 12:
+            year_offset = n // 12
+            month_offset = n % 12
+        else:
+            year_offset = 0
+            month_offset = n
+            
+        if self._month > month_offset:
+            new_month = self._month - month_offset
+            new_year = self._year - year_offset
+        elif self._month == month_offset:
+            # last month of pervious year
+            new_month = 12
+            new_year = self._year - year_offset - 1
+        else:
+            new_month = self._month + 12 - month_offset
+            new_year = self._year - year_offset -1
+            
+        return Month(new_year, new_month)
 
     def __add__(self, num_of_month):
         if not isinstance(num_of_month, int) or num_of_month <= 0:
@@ -70,14 +93,6 @@ class Month(object):
         month = month % 12 + 1
         return Month(year, month)
 
-
-    def __sub__(self, num_of_month):
-        if not isinstance(num_of_month, int) or num_of_month <= 0:
-            raise ValueError("Please give a int and greater than 0")
-        month = self._month - num_of_month
-        year = self._year + month // 12
-        month = month % 12 + 1
-        return Month(year, month)
 
     @property
     def first_day(self):
