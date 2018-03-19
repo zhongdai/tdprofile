@@ -84,6 +84,45 @@ class TDPROFILETestCase(unittest.TestCase):
 
         self.assertEqual(m, n)
 
+    def test_compare(self):
+        m = Month(2017,12)
+        n = Month(2018,7)
+
+        self.assertTrue(n != m)
+        self.assertTrue(m < n)
+        self.assertTrue(m <= n)
+        self.assertTrue(n > m)
+        self.assertTrue(n >= m)
+
+    def test_compare_equal(self):
+        m = Month(2018,1)
+        n = Month(2018,1)
+
+        self.assertTrue(m <= n)
+        self.assertTrue(m >= n)
+
+    def test_as_cy(self):
+        m = Month(2018,10)
+        m2 = Month(2017,3)
+        target = Month(2017,10)
+
+        m.as_cy()
+        m2.as_cy()
+        self.assertEqual(target, m)
+        self.assertEqual(m2, Month(2017,3))
+
+
+    def test_as_fy(self):
+        m = Month(2017,10)
+        m2 = Month(2017,3)
+        target = Month(2018,10)
+
+        m.as_fy()
+        m2.as_fy()
+        self.assertEqual(target, m)
+
+        self.assertEqual(m2, Month(2017,3))
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TDPROFILETestCase)
     unittest.TextTestRunner(verbosity=2).run(suite)
